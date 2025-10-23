@@ -1,3 +1,3 @@
 # return
 
-Game developed by Phillip and Magnus
+Game project by Phillip and Magnus
