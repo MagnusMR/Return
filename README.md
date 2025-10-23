@@ -1,2 +1,3 @@
 # return
-Game devolped by Phillip and Magnus
+
+Game developed by Phillip and Magnus
