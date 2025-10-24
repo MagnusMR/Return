@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Return"
-run/main_scene="uid://b335v78pygbl5"
+run/main_scene="uid://fd1uh564tiy3"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
