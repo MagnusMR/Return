@@ -15,10 +15,24 @@ func calculate_velocity():
 	velocity = get_input() * move_speed
 
 
-# midlertid version indtil der er idle animation til alle retninger
 func idle_animation():
 	if !move_vector:
-		_animated_sprite.play("idle_e")
+		if last_vector.x > 0.8:
+			_animated_sprite.play("idle_e")
+		elif last_vector.x < 0.8 && last_vector.x > 0 && last_vector.y > 0:
+			_animated_sprite.play("idle_se")
+		elif last_vector.x == 0 && last_vector.y > 0.8:
+			_animated_sprite.play("idle_s")
+		elif last_vector.x < 0 and last_vector.x > -0.8 and last_vector.y > 0:
+			_animated_sprite.play("idle_sw")
+		elif last_vector.x < -0.8:
+			_animated_sprite.play("idle_w")
+		elif last_vector.x < 0 and last_vector.x > -0.8 and last_vector.y < 0:
+			_animated_sprite.play("idle_nw")
+		elif last_vector.x == 0 and last_vector.y < -0.8:
+			_animated_sprite.play("idle_n")
+		elif last_vector.x > 0 and last_vector.x < 0.8 and last_vector.y < 0:
+			_animated_sprite.play("idle_ne")
 
 
 func run_animation():
