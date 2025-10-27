@@ -20,7 +20,7 @@ func get_input():
 func calculate_velocity():
 	if !is_attacking:
 		velocity = input_state["move_vector"] * move_speed
-	else: 
+	else:
 		velocity = Vector2.ZERO
 
 
