@@ -2,105 +2,86 @@ extends CharacterBody2D
 
 @export var move_speed = 300
 @onready var _animated_sprite = $AnimatedSprite2D
-var move_vector
-var attack_input
-var block_input
 var last_vector = Vector2.RIGHT
-var mouse_sector
+var move_sector = 0
+var last_move_sector = 0
+var mouse_sector = 0
 var directions = ["e", "se", "s", "sw", "w", "nw", "n", "ne"]
-var mouse_direction = 0
 var is_attacking = false
 
 
 func get_move_vector():
-	move_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var move_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	return move_vector
 
 
 func get_attack_input():
-	attack_input = Input.is_action_just_pressed("attack")
+	var attack_input = Input.is_action_just_pressed("attack")
 	return attack_input
 
 
 func get_block_input():
-	block_input = Input.is_action_pressed("block")
+	var block_input = Input.is_action_pressed("block")
 	return block_input
 
 
-func calculate_velocity():
+func get_move_direction():
+	if get_move_vector().length_squared() > 0.001:
+		var move_angle = atan2(get_move_vector().y, get_move_vector().x)
+		move_angle = fposmod(move_angle + PI / 8, TAU)
+		move_sector = int(floor(move_angle / (PI / 4)))
+		last_move_sector = move_sector
+	else:
+		move_sector = last_move_sector
+	var move_direction = directions[move_sector]
+	return move_direction
+
+
+# returns e, se, s....  as string, based on sector index of 0-7
+func get_mouse_direction():
+	var mouse_vector = ((get_global_mouse_position() - _animated_sprite.global_position)).normalized()
+	var mouse_angle = atan2(mouse_vector.y, mouse_vector.x)
+	mouse_angle = fposmod(mouse_angle + PI / 8, TAU)
+	mouse_sector = int(floor(mouse_angle / (PI / 4)))
+	var mouse_direction = directions[mouse_sector]
+	return mouse_direction
+
+
+func _get_velocity():
 	if !is_attacking:
 		velocity = get_move_vector() * move_speed
 	else:
 		velocity = Vector2.ZERO
 
 
-# returns sectors 0-7, corresponding to e, se, s.....
-func get_mouse_sector():
-	var mouse_vector = ((get_global_mouse_position() - _animated_sprite.global_position)).normalized()
-	var mouse_angle = atan2(mouse_vector.y, mouse_vector.x)
-	mouse_angle = fposmod(mouse_angle + PI / 8, TAU)
-	mouse_sector = int(floor(mouse_angle / (PI / 4)))
-	return mouse_sector
-
-
 func attack_animation():
 	if get_attack_input() && !is_attacking:
 		is_attacking = true
-		if last_vector.x > 0.8:
-			_animated_sprite.play("attack_e")
-		elif last_vector.x < 0.8 && last_vector.x > 0 && last_vector.y > 0:
-			_animated_sprite.play("attack_se")
-		elif last_vector.x == 0 && last_vector.y > 0.8:
-			_animated_sprite.play("attack_s")
-		elif last_vector.x < 0 && last_vector.x > -0.8 && last_vector.y > 0:
-			_animated_sprite.play("attack_sw")
-		elif last_vector.x < -0.8:
-			_animated_sprite.play("attack_w")
-		elif last_vector.x < 0 && last_vector.x > -0.8 && last_vector.y < 0:
-			_animated_sprite.play("attack_nw")
-		elif last_vector.x == 0 && last_vector.y < -0.8:
-			_animated_sprite.play("attack_n")
-		elif last_vector.x > 0 && last_vector.x < 0.8 && last_vector.y < 0:
-			_animated_sprite.play("attack_ne")
+		_animated_sprite.play("attack_" + get_mouse_direction())
 
 
 func idle_animation():
 	if !get_move_vector():
-		if last_vector.x > 0.8:
-			_animated_sprite.play("idle_e")
-		elif last_vector.x < 0.8 && last_vector.x > 0 && last_vector.y > 0:
-			_animated_sprite.play("idle_se")
-		elif last_vector.x == 0 && last_vector.y > 0.8:
-			_animated_sprite.play("idle_s")
-		elif last_vector.x < 0 && last_vector.x > -0.8 && last_vector.y > 0:
-			_animated_sprite.play("idle_sw")
-		elif last_vector.x < -0.8:
-			_animated_sprite.play("idle_w")
-		elif last_vector.x < 0 && last_vector.x > -0.8 && last_vector.y < 0:
-			_animated_sprite.play("idle_nw")
-		elif last_vector.x == 0 && last_vector.y < -0.8:
-			_animated_sprite.play("idle_n")
-		elif last_vector.x > 0 && last_vector.x < 0.8 && last_vector.y < 0:
-			_animated_sprite.play("idle_ne")
+		_animated_sprite.play("idle_" + get_mouse_direction())
 
 
+# function is named animation put also speed is adjusted. either neeeds to be renamed or seperated to 2 different functions
 func run_animation():
-	if get_move_vector().x > 0.8:
-		_animated_sprite.play("run_e")
-	elif get_move_vector().x < 0.8 && get_move_vector().x > 0 && get_move_vector().y > 0:
-		_animated_sprite.play("run_se")
-	elif get_move_vector().x == 0 && get_move_vector().y > 0.8:
-		_animated_sprite.play("run_s")
-	elif get_move_vector().x < 0 && get_move_vector().x > -0.8 && get_move_vector().y > 0:
-		_animated_sprite.play("run_sw")
-	elif get_move_vector().x < -0.8:
-		_animated_sprite.play("run_w")
-	elif get_move_vector().x < 0 && get_move_vector().x > -0.8 && get_move_vector().y < 0:
-		_animated_sprite.play("run_nw")
-	elif get_move_vector().x == 0 && get_move_vector().y < -0.8:
-		_animated_sprite.play("run_n")
-	elif get_move_vector().x > 0 && get_move_vector().x < 0.8 && get_move_vector().y < 0:
-		_animated_sprite.play("run_ne")
+	var difference = fposmod(move_sector - mouse_sector, 8)
+	print(difference)
+	if difference == 0:
+		_animated_sprite.play("run_forwards_" + get_move_direction())
+		move_speed = 300
+	elif difference == 2:
+		_animated_sprite.play("run_sideways_right_" + get_move_direction())
+		move_speed = 250
+	elif difference == 4:
+		_animated_sprite.play("run_backwards_" + get_move_direction())
+		move_speed = 200
+		print("playing backwards animation")
+	elif difference == 6:
+		_animated_sprite.play("run_sideways_left_" + get_move_direction())
+		move_speed = 250
 
 
 func update_animation():
@@ -122,7 +103,9 @@ func animation_done() -> void:
 
 func _physics_process(_delta):
 	get_move_vector()
-	get_mouse_sector()
-	calculate_velocity()
+	get_attack_input()
+	get_mouse_direction()
+	get_move_direction()
+	_get_velocity()
 	update_animation()
 	move_and_slide()
