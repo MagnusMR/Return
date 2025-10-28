@@ -4,6 +4,10 @@ extends CharacterBody2D
 @onready var _animated_sprite = $AnimatedSprite2D
 var input_state
 var last_vector = Vector2.RIGHT
+var mouse_sector
+var move_vector
+var directions = ["e", "se", "s", "sw", "w", "nw", "n", "ne"]
+var mouse_direction = directions[mouse_sector]
 var is_attacking = false
 
 
@@ -22,6 +26,15 @@ func calculate_velocity():
 		velocity = input_state["move_vector"] * move_speed
 	else:
 		velocity = Vector2.ZERO
+
+
+# returns sectors 0-7, corresponding to e, se, s.....
+func get_mouse_sector():
+	var mouse_vector = ((get_global_mouse_position() - _animated_sprite.global_position)).normalized()
+	var mouse_angle = atan2(mouse_vector.y, mouse_vector.x)
+	mouse_angle = fposmod(mouse_angle + PI / 8, TAU)
+	mouse_sector = int(floor(mouse_angle / (PI / 4)))
+	return mouse_sector
 
 
 func attack_animation():
@@ -97,6 +110,7 @@ func update_animation():
 
 func _physics_process(_delta):
 	get_input()
+	get_mouse_sector()
 	calculate_velocity()
 	update_animation()
 	move_and_slide()
