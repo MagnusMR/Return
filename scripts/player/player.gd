@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var move_speed = 300
-@onready var _animated_sprite = $AnimatedSprite2D
+@onready var animated_sprite = $AnimatedSprite2D
 var last_vector = Vector2.RIGHT
 var move_sector = 0
 var last_move_sector = 0
@@ -26,7 +26,7 @@ func get_block_input() -> bool:
 
 
 func get_move_direction() -> String:
-	if get_move_vector().length_squared() > 0.001:
+	if get_move_vector().length_squared() > 0:
 		var move_angle = atan2(get_move_vector().y, get_move_vector().x)
 		move_angle = fposmod(move_angle + PI / 8, TAU)
 		move_sector = int(floor(move_angle / (PI / 4)))
@@ -38,8 +38,8 @@ func get_move_direction() -> String:
 
 
 # returns e, se, s....  as string, based on sector index of 0-7
-func get_mouse_direction() -> String: 
-	var mouse_vector = ((get_global_mouse_position() - _animated_sprite.global_position)).normalized()
+func get_mouse_direction() -> String:
+	var mouse_vector = ((get_global_mouse_position() - animated_sprite.global_position)).normalized()
 	var mouse_angle = atan2(mouse_vector.y, mouse_vector.x)
 	mouse_angle = fposmod(mouse_angle + PI / 8, TAU)
 	mouse_sector = int(floor(mouse_angle / (PI / 4)))
@@ -47,7 +47,7 @@ func get_mouse_direction() -> String:
 	return mouse_direction
 
 
-func _get_velocity() -> void:
+func calculate_velocity() -> void:
 	if !is_attacking:
 		velocity = get_move_vector() * move_speed
 	else:
@@ -57,30 +57,30 @@ func _get_velocity() -> void:
 func attack_animation() -> void:
 	if get_attack_input() && !is_attacking:
 		is_attacking = true
-		_animated_sprite.play("attack_" + get_mouse_direction())
+		animated_sprite.play("attack_" + get_mouse_direction())
 
 
 func idle_animation() -> void:
 	if !get_move_vector():
-		_animated_sprite.play("idle_" + get_mouse_direction())
+		animated_sprite.play("idle_" + get_mouse_direction())
 
 
 # function is named animation put also speed is adjusted. either neeeds to be renamed or seperated to 2 different functions
-func run_animation() -> void:
+func run_direction() -> void:
 	var difference = fposmod(move_sector - mouse_sector, 8)
 	print(difference)
 	if difference == 0:
-		_animated_sprite.play("run_forwards_" + get_move_direction())
+		animated_sprite.play("run_forwards_" + get_move_direction())
 		move_speed = 300
 	elif difference == 2:
-		_animated_sprite.play("run_sideways_right_" + get_move_direction())
+		animated_sprite.play("run_sideways_right_" + get_move_direction())
 		move_speed = 250
 	elif difference == 4:
-		_animated_sprite.play("run_backwards_" + get_move_direction())
+		animated_sprite.play("run_backwards_" + get_move_direction())
 		move_speed = 200
 		print("playing backwards animation")
 	elif difference == 6:
-		_animated_sprite.play("run_sideways_left_" + get_move_direction())
+		animated_sprite.play("run_sideways_left_" + get_move_direction())
 		move_speed = 250
 
 
@@ -92,12 +92,12 @@ func update_animation() -> void:
 		print("is attacking")
 		return
 	idle_animation()
-	run_animation()
+	run_direction()
 
 
 func animation_done() -> void:
 	print("signal received")
-	if _animated_sprite.animation.begins_with("attack"):
+	if animated_sprite.animation.begins_with("attack"):
 		is_attacking = false
 
 
@@ -106,6 +106,6 @@ func _physics_process(_delta) -> void:
 	get_attack_input()
 	get_mouse_direction()
 	get_move_direction()
-	_get_velocity()
+	calculate_velocity()
 	update_animation()
 	move_and_slide()
