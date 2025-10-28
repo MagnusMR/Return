@@ -10,22 +10,22 @@ var directions = ["e", "se", "s", "sw", "w", "nw", "n", "ne"]
 var is_attacking = false
 
 
-func get_move_vector():
+func get_move_vector() -> Vector2:
 	var move_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	return move_vector
 
 
-func get_attack_input():
+func get_attack_input() -> bool:
 	var attack_input = Input.is_action_just_pressed("attack")
 	return attack_input
 
 
-func get_block_input():
+func get_block_input() -> bool:
 	var block_input = Input.is_action_pressed("block")
 	return block_input
 
 
-func get_move_direction():
+func get_move_direction() -> String:
 	if get_move_vector().length_squared() > 0.001:
 		var move_angle = atan2(get_move_vector().y, get_move_vector().x)
 		move_angle = fposmod(move_angle + PI / 8, TAU)
@@ -38,7 +38,7 @@ func get_move_direction():
 
 
 # returns e, se, s....  as string, based on sector index of 0-7
-func get_mouse_direction():
+func get_mouse_direction() -> String: 
 	var mouse_vector = ((get_global_mouse_position() - _animated_sprite.global_position)).normalized()
 	var mouse_angle = atan2(mouse_vector.y, mouse_vector.x)
 	mouse_angle = fposmod(mouse_angle + PI / 8, TAU)
@@ -47,26 +47,26 @@ func get_mouse_direction():
 	return mouse_direction
 
 
-func _get_velocity():
+func _get_velocity() -> void:
 	if !is_attacking:
 		velocity = get_move_vector() * move_speed
 	else:
 		velocity = Vector2.ZERO
 
 
-func attack_animation():
+func attack_animation() -> void:
 	if get_attack_input() && !is_attacking:
 		is_attacking = true
 		_animated_sprite.play("attack_" + get_mouse_direction())
 
 
-func idle_animation():
+func idle_animation() -> void:
 	if !get_move_vector():
 		_animated_sprite.play("idle_" + get_mouse_direction())
 
 
 # function is named animation put also speed is adjusted. either neeeds to be renamed or seperated to 2 different functions
-func run_animation():
+func run_animation() -> void:
 	var difference = fposmod(move_sector - mouse_sector, 8)
 	print(difference)
 	if difference == 0:
@@ -84,7 +84,7 @@ func run_animation():
 		move_speed = 250
 
 
-func update_animation():
+func update_animation() -> void:
 	if get_move_vector():
 		last_vector = get_move_vector()
 	attack_animation()
@@ -101,7 +101,7 @@ func animation_done() -> void:
 		is_attacking = false
 
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	get_move_vector()
 	get_attack_input()
 	get_mouse_direction()
