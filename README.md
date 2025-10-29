@@ -33,6 +33,11 @@ Develop a **Proof of Concept (v0.1)** featuring:
 - Standard enemies and a single boss fight.
 - Symbolic ending sequence establishing the game’s tone.
 
+## Code Overview
+
+The core gameplay logic is located in [`player.gd`](./scripts/player/player.gd).  
+This script handles player movement, attacks, and other core systems implemented in Godot using GDScript.
+
 ## Engine & Tools
 
 - **Engine:** Godot 4
