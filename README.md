@@ -1,6 +1,6 @@
 # Return
 
-**A 2D action RPG prototype** built in **Godot 4**, created by **Magnus** and **Philip**.
+**A 2D action RPG prototype** built in **Godot 4**, created by **Magnus** and **Phillip**.
 
 ## Overview
 
@@ -18,7 +18,7 @@ Responsible for all programming and technical implementation.
 - Integrates assets and sets up levels in Godot.
 - Focuses on mechanical feel and playtesting.
 
-**Philip – 2D Game Artist & Narrative Developer**  
+**Phillip – 2D Game Artist & Narrative Developer**  
 Responsible for visual and narrative design.
 
 - Creates sprites, tilesets, UI art, and visual effects.
