@@ -422,6 +422,41 @@ animations = [{
 "name": &"attack_w",
 "speed": 10.0
 }, {
+"frames": [],
+"loop": true,
+"name": &"block_e",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"block_n",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"block_nw",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"block_s",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"block_se",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"block_sw",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"block_w",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fm80t")
@@ -605,6 +640,11 @@ animations = [{
 "loop": true,
 "name": &"idle_w",
 "speed": 8.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -855,11 +895,13 @@ animations = [{
 size = Vector2(0.9375, 1.875)
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 3
 script = ExtResource("1_8afob")
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_5gtgg")
-animation = &"run_sideways_right_w"
+animation = &"attack_e"
 autoplay = "idle_e"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
