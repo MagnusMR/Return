@@ -8,6 +8,7 @@ var last_move_sector = 0
 var mouse_sector = 0
 var directions = ["e", "se", "s", "sw", "w", "nw", "n", "ne"]
 var is_attacking = false
+var is_blocking = false
 
 
 func get_move_vector() -> Vector2:
@@ -54,10 +55,18 @@ func calculate_velocity() -> void:
 		velocity = Vector2.ZERO
 
 
-func attack_animation() -> void:
+func handle_attack() -> void:
 	if get_attack_input() && !is_attacking:
 		is_attacking = true
 		animated_sprite.play("attack_" + get_mouse_direction())
+
+
+func handle_block() -> void:
+	if get_block_input():
+		is_blocking = true
+		animated_sprite.play("block_" + get_mouse_direction())
+	else:
+		is_blocking = false
 
 
 func idle_animation() -> void:
@@ -84,13 +93,13 @@ func run_direction() -> void:
 		move_speed = 250
 
 
-func update_animation() -> void:
+func update_state() -> void:
 	if get_move_vector():
 		last_vector = get_move_vector()
-	attack_animation()
+	handle_attack()
 	if is_attacking:
-		print("is attacking")
 		return
+	handle_block()
 	idle_animation()
 	run_direction()
 
@@ -107,5 +116,5 @@ func _physics_process(_delta) -> void:
 	get_mouse_direction()
 	get_move_direction()
 	calculate_velocity()
-	update_animation()
+	update_state()
 	move_and_slide()
