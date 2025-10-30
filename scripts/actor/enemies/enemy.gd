@@ -1,18 +1,19 @@
-extends CharacterBody2D
+extends "res://scripts/actor/actor.gd"
 
-var move_speed = 150
 var player_chase = false
 var player = null
 var move_vector = Vector2.ZERO
 
+
+func _ready() -> void:
+	move_speed = 150
+
+
 func get_move_vector():
 	if player_chase:
 		return (player.global_position - global_position).normalized()
-	else: return Vector2.ZERO
-
-
-func calculate_velocity() -> void:
-	velocity = get_move_vector() * move_speed
+	else:
+		return Vector2.ZERO
 
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
