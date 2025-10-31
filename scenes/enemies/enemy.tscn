@@ -1,0 +1,144 @@
+[gd_scene load_steps=12 format=3 uid="uid://dkoy1wi7ue1ab"]
+
+[ext_resource type="Script" uid="uid://3htgg8o32tgj" path="res://scripts/enemies/enemy.gd" id="1_6xk8f"]
+[ext_resource type="Texture2D" uid="uid://by06rgjb2m1md" path="res://assets/sprites/player/player_sword_normal_idle_v.2.png" id="2_8e3ao"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38ino"]
+atlas = ExtResource("2_8e3ao")
+region = Rect2(112, 48, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcftc"]
+atlas = ExtResource("2_8e3ao")
+region = Rect2(112, 96, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lu5c6"]
+atlas = ExtResource("2_8e3ao")
+region = Rect2(112, 144, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb6gf"]
+atlas = ExtResource("2_8e3ao")
+region = Rect2(112, 192, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jt03m"]
+atlas = ExtResource("2_8e3ao")
+region = Rect2(112, 240, 56, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7575"]
+atlas = ExtResource("2_8e3ao")
+region = Rect2(112, 288, 56, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8e3ao"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"attack_e",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"attack_n",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"attack_s",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"attack_w",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38ino")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fcftc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lu5c6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nb6gf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jt03m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7575")
+}],
+"loop": true,
+"name": &"idle_e",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle_n",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle_s",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle_w",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run_e",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run_n",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run_s",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run_w",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_38ino"]
+size = Vector2(15.5, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qch6t"]
+radius = 78.025635
+
+[node name="Enemy" type="CharacterBody2D"]
+position = Vector2(19, 7)
+script = ExtResource("1_6xk8f")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-19, -7)
+sprite_frames = SubResource("SpriteFrames_8e3ao")
+animation = &"idle_e"
+frame = 2
+frame_progress = 0.1818858
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-17, 1)
+shape = SubResource("RectangleShape2D_38ino")
+
+[node name="detection_area" type="Area2D" parent="."]
+position = Vector2(-19, -6)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+position = Vector2(2, 6)
+shape = SubResource("CircleShape2D_qch6t")
+debug_color = Color(5.390644e-06, 0.58399975, 0.7825718, 0.41960785)
+
+[connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
