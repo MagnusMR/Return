@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var move_speed = 200
+var move_speed = 150
 var is_attacking = false
 var is_blocking = false
 var directions = ["e", "se", "s", "sw", "w", "nw", "n", "ne"]
