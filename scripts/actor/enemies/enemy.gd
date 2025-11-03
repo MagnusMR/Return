@@ -1,18 +1,26 @@
 extends "res://scripts/actor/actor.gd"
 
+@onready var navigation_agent: NavigationAgent2D = get_node("NavigationAgent2D")
 var player_chase = false
 var player = null
 var move_vector = Vector2.ZERO
+var attack_range = 40
 
 
-func get_move_vector():
+func get_move_vector() -> Vector2:
 	if player_chase:
-		return (player.global_position - global_position).normalized()
+		navigation_agent.target_desired_distance = attack_range
+		navigation_agent.set_target_position(player.global_position)
+		var next_path_position = navigation_agent.get_next_path_position()
+		move_vector = global_position.direction_to(next_path_position)
+		if navigation_agent.is_navigation_finished():
+			return Vector2.ZERO
+		return move_vector
 	else:
 		return Vector2.ZERO
 
 
-func _on_detection_area_body_entered(body: Node2D) -> void:
+func _on_detection_area_body_entered(body: Node2D):
 	player = body
 	player_chase = true
 

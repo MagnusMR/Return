@@ -1,6 +1,6 @@
 [gd_scene load_steps=60 format=3 uid="uid://dkoy1wi7ue1ab"]
 
-[ext_resource type="Script" uid="uid://3htgg8o32tgj" path="res://scripts/actor/enemies/enemy.gd" id="1_6xk8f"]
+[ext_resource type="Script" uid="uid://bde5ckeh5s0xo" path="res://scripts/actor/enemies/enemy.gd" id="1_6xk8f"]
 [ext_resource type="Texture2D" uid="uid://dwa3a8isgoucx" path="res://assets/sprites/player/player_sword_normal_idle.png" id="2_38ino"]
 [ext_resource type="Texture2D" uid="uid://drrocqjak1xli" path="res://assets/sprites/player/player_sword_normal_run_forwards.png" id="3_fcftc"]
 
@@ -442,7 +442,7 @@ animations = [{
 size = Vector2(15.5, 32)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qch6t"]
-radius = 78.025635
+radius = 188.00266
 
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_6xk8f")
@@ -468,6 +468,7 @@ shape = SubResource("CircleShape2D_qch6t")
 debug_color = Color(5.390644e-06, 0.58399975, 0.7825718, 0.41960785)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 50.0
 avoidance_enabled = true
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
