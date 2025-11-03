@@ -467,5 +467,8 @@ position = Vector2(20, -2)
 shape = SubResource("CircleShape2D_qch6t")
 debug_color = Color(5.390644e-06, 0.58399975, 0.7825718, 0.41960785)
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
