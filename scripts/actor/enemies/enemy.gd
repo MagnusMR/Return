@@ -5,10 +5,6 @@ var player = null
 var move_vector = Vector2.ZERO
 
 
-func _ready() -> void:
-	move_speed = 150
-
-
 func get_move_vector():
 	if player_chase:
 		return (player.global_position - global_position).normalized()

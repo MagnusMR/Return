@@ -38,7 +38,7 @@ func get_move_vector():
 
 
 func calculate_velocity() -> void:
-	if !is_attacking:
+	if !is_attacking && !is_blocking:
 		velocity = get_move_vector() * move_speed
 	else:
 		velocity = Vector2.ZERO

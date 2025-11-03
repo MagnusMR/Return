@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dc1svgb0fjibc"
-path="res://.godot/imported/player_sword_normal_run_forwards_v.4.png-2c3ee747afc44b1a8aa37e95137a8834.ctex"
+uid="uid://drrocqjak1xli"
+path="res://.godot/imported/player_sword_normal_run_forwards.png-5d53a83909479fdb81df71c1cf5329c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/player/player_sword_normal_run_forwards_v.4.png"
-dest_files=["res://.godot/imported/player_sword_normal_run_forwards_v.4.png-2c3ee747afc44b1a8aa37e95137a8834.ctex"]
+source_file="res://assets/sprites/player/player_sword_normal_run_forwards.png"
+dest_files=["res://.godot/imported/player_sword_normal_run_forwards.png-5d53a83909479fdb81df71c1cf5329c6.ctex"]
 
 [params]
 

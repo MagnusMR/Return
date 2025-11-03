@@ -529,7 +529,6 @@ position = Vector2(-297, -150)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(2, 2)
-position_smoothing_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 top_level = true
