@@ -4,6 +4,7 @@ var mouse_sector = 0
 
 
 func _ready() -> void:
+	super()
 	move_speed = 300
 
 

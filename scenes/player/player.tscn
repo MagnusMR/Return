@@ -2281,5 +2281,3 @@ autoplay = "idle_e"
 position = Vector2(-1, -19)
 scale = Vector2(16, 16)
 shape = SubResource("RectangleShape2D_gmlin")
-
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="animation_done"]

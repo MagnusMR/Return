@@ -10,12 +10,12 @@ var last_move_sector = 0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-
 func _ready() -> void:
 	animated_sprite.animation_finished.connect(animation_done)
+	print("signal connected")
 
 
-func animation_done() -> void:
+func animation_done():
 	print("signal received")
 	if animated_sprite.animation.begins_with("attack"):
 		is_attacking = false
@@ -34,6 +34,9 @@ func get_move_direction() -> String:
 
 
 func get_move_vector():
+	pass
+
+func handle_attack():
 	pass
 
 
