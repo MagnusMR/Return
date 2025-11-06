@@ -4,7 +4,7 @@ extends "res://scripts/actor/actor.gd"
 var player_chase = false
 var player = null
 var move_vector = Vector2.ZERO
-var attack_range = 40
+var attack_range = 60
 
 
 func get_move_vector() -> Vector2:

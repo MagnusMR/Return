@@ -13,9 +13,9 @@ func get_move_vector() -> Vector2:
 	return move_vector
 
 
-#func get_attack_input() -> bool:
-	#var attack_input = Input.is_action_just_pressed("attack")
-	#return attack_input
+func get_attack_input() -> bool:
+	var attack_input = Input.is_action_just_pressed("attack")
+	return attack_input
 
 
 func get_block_input() -> bool:
@@ -33,20 +33,20 @@ func get_mouse_direction() -> String:
 	return mouse_direction
 
 
-#func handle_attack() -> void:
-	#if get_attack_input() && !is_attacking:
-		#is_attacking = true
-		#animated_sprite.play("attack_" + get_mouse_direction())
+func handle_attack() -> void:
+	if get_attack_input() && !is_attacking:
+		is_attacking = true
+		animated_sprite.play("attack_" + get_mouse_direction())
 
 
 func handle_block() -> void:
 	if get_block_input():
 		is_blocking = true
-		print(is_blocking)
+		#print(is_blocking)
 		animated_sprite.play("block_" + get_mouse_direction())
 	else:
 		is_blocking = false
-		print(is_blocking)
+		#print(is_blocking)
 
 
 func play_idle_animation() -> void:
@@ -58,7 +58,7 @@ func play_idle_animation() -> void:
 func play_run_animation() -> void:
 	if get_move_vector():
 		var difference = fposmod(move_sector - mouse_sector, 8)
-		print(difference)
+		#print(difference)
 		if difference <= 2 || difference >= 6:
 			#print("running fowards")
 			animated_sprite.play("run_forwards_" + get_move_direction())
@@ -72,7 +72,7 @@ func play_run_animation() -> void:
 func update_state() -> void:
 	if get_move_vector():
 		last_vector = get_move_vector()
-	#handle_attack()
+	handle_attack()
 	if is_attacking:
 		return
 	handle_block()
@@ -84,7 +84,7 @@ func update_state() -> void:
 
 func _physics_process(_delta) -> void:
 	get_move_vector()
-	#get_attack_input()
+	get_attack_input()
 	get_mouse_direction()
 	get_move_direction()
 	calculate_velocity()
