@@ -7,6 +7,7 @@ var directions = ["e", "se", "s", "sw", "w", "nw", "n", "ne"]
 var last_vector = Vector2.RIGHT
 var move_sector = 0
 var last_move_sector = 0
+var move_vector = Vector2.ZERO
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -35,6 +36,7 @@ func get_move_direction() -> String:
 
 func get_move_vector():
 	pass
+
 
 
 func calculate_velocity() -> void:

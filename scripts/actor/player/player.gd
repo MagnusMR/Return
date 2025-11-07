@@ -4,12 +4,12 @@ var mouse_sector = 0
 
 
 func _ready() -> void:
-	super()
+	super ()
 	move_speed = 300
 
 
 func get_move_vector() -> Vector2:
-	var move_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	move_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	#print(move_vector)
 	return move_vector
 
