@@ -36,9 +36,6 @@ func get_move_direction() -> String:
 func get_move_vector():
 	pass
 
-func handle_attack():
-	pass
-
 
 func calculate_velocity() -> void:
 	if !is_attacking && !is_blocking:
