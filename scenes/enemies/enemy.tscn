@@ -1087,17 +1087,15 @@ size = Vector2(15.5, 32)
 radius = 188.00266
 
 [node name="Enemy" type="CharacterBody2D" groups=["actors_enemies"]]
-position = Vector2(0, -8)
 script = ExtResource("1_6xk8f")
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -32)
+position = Vector2(0, -40)
 sprite_frames = SubResource("SpriteFrames_8e3ao")
 animation = &"run_se"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -17)
+position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_38ino")
 
 [node name="detection_area" type="Area2D" parent="."]
@@ -1115,7 +1113,7 @@ path_desired_distance = 50.0
 avoidance_enabled = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.1
 autostart = true
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
