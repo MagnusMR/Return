@@ -13,11 +13,10 @@ var move_vector = Vector2.ZERO
 
 func _ready() -> void:
 	animated_sprite.animation_finished.connect(animation_done)
-	print("signal connected")
 
 
 func animation_done():
-	print("signal received")
+	#print("signal received")
 	if animated_sprite.animation.begins_with("attack"):
 		is_attacking = false
 

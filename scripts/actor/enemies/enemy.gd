@@ -10,13 +10,15 @@ var attack_range = 40
 
 func _ready() -> void:
 	super ()
-	navigation_agent.target_desired_distance = attack_range
+	navigation_agent.target_desired_distance = (attack_range - 20)
 	timer.timeout.connect(_on_timer_timeout)
+
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	player = body
 	player_chase = true
 	navigation_agent.set_target_position(player.global_position)
+	timer.start()
 	#print(player_chase)
 
 
@@ -27,9 +29,7 @@ func _on_detection_area_body_exited(_body: Node2D) -> void:
 
 
 func _on_timer_timeout():
-	if is_attacking:
-		navigation_agent.set_target_position(global_position)
-		return
+	print("timer signal recived")
 	if player_chase:
 		navigation_agent.set_target_position(player.global_position)
 
